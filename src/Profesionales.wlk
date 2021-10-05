@@ -18,7 +18,7 @@ class ProfesionalVinculado {
 class ProfesionalAsociado {
 	var property universidad
 	method puedeTrabajarEn() {
-		return #{"Entre Ríos","Santa Fe","Corrientes"}
+		return #{"Entre Rios","Santa Fe","Corrientes"}
 	}
 	method honorariosPorHora() = 3000	
 	
