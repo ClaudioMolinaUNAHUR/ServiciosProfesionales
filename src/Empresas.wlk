@@ -5,7 +5,7 @@ import solicitantes.*
 class Empresa {
 	
 	var profesionales = #{}
-	var property honorarioDeReferencia = 0
+	var property honorarioDeReferencia = 10
 	
 	method agregarProfesional(unProfesional) {
 		profesionales.add(unProfesional)
