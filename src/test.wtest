@@ -1,0 +1,69 @@
+import Universidades.*
+import Profesionales.*
+import Empresas.*
+import solicitantes.*
+
+describe "Test" {
+	
+	const sm = new Universidad(provincia="Bs As",honorariosPorHora=3500, nombre="San Martin")
+	const rs = new Universidad(provincia="Santa Fe",honorariosPorHora=2800, nombre= "Rosario")
+	const co = new Universidad(provincia="Corrientes",honorariosPorHora=4200, nombre="Corrientes")
+	const hu = new Universidad(provincia="Bs As",honorariosPorHora=8800, nombre="Hurlingham")
+	
+	const juana = new ProfesionalVinculado(universidad=rs)
+	const melina = new ProfesionalAsociado(universidad=co)
+	const rocio = new ProfesionalLibre(universidad=hu, honorariosPorHora=5000, puedeTrabajarEn=#{"Santa Fe","Cordoba", "Bs As"})
+	const luciana = new ProfesionalLibre(universidad=rs, honorariosPorHora=3200, puedeTrabajarEn=#{"Santa Fe","Entre Rios"})
+	
+	const emp1 = new Empresa()
+	
+	const p1 = new Persona()
+	const i1 = new Institucion(universidades=#{hu, sm})
+	const i2 = new Institucion(universidades=#{sm})
+	
+	method initialize() {
+		emp1.honorarioDeReferencia(3500)
+		emp1.agregarProfesional(juana)
+		emp1.agregarProfesional(melina)
+		emp1.agregarProfesional(rocio)
+		emp1.agregarProfesional(luciana)
+		p1.provincia("San Juan")
+	}
+	
+	test "cuantosEstudiaronEn: Rosario" {
+		assert.equals(2, emp1.cuantosEstudiaronEn(rs))
+	}
+	
+	test "cuantosEstudiaronEn: Hu" {
+		assert.equals(1, emp1.cuantosEstudiaronEn(hu))
+	}
+	
+	test "cuantosEstudiaronEn: SM" {
+		assert.equals(0, emp1.cuantosEstudiaronEn(sm))
+	}
+	
+	test "profesionales mas caros" {
+		assert.equals(#{rocio}, emp1.profesionalesMasCaros())
+	}
+	test "formadoras" {
+		assert.equals(#{rs,co,hu}, emp1.universidadesFormadoras())
+	}
+	
+	test "mas Barato" {
+		assert.equals(juana, emp1.profesionaMasBarato())
+	}
+	
+	test "No puede ser atendida Persona" {
+		assert.notThat(emp1.puedeSatisfacer(p1))
+	}
+	
+	test "si puede ser atendida" {
+		assert.that(emp1.puedeSatisfacer(i1))
+	}
+	
+	test "si puede ser atendida Institucion" {
+		assert.notThat(emp1.puedeSatisfacer(i2))
+	}
+	
+	
+}
