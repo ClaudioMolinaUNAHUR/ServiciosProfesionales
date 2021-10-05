@@ -53,7 +53,7 @@ describe "Test" {
 		assert.equals(juana, emp1.profesionaMasBarato())
 	}
 	
-	test "No puede ser atendida Persona" {
+	test "No puede ser atendida Persona ok" {
 		assert.notThat(emp1.puedeSatisfacer(p1))
 	}
 	
